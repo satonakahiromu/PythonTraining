@@ -35,9 +35,9 @@ def redirect_to_login():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']  # ユーザー名からメールアドレスへ変更
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()  # username を email に変更
         
         if user and check_password_hash(user.password, password):
             login_user(user)
