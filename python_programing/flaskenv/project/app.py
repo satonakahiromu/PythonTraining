@@ -31,6 +31,25 @@ def load_user(user_id):
 def redirect_to_login():
     return redirect(url_for('login'))
 
+#ユーザー登録機能
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        name = request.form['name']
+        role = request.form['role']
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        new_user = User(email=email, username=username, password=hashed_password, name=name, role=role)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+# ログインページ
 # ログインページ
 @app.route('/login', methods=['GET', 'POST'])
 def login():
