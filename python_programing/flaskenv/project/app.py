@@ -16,7 +16,10 @@ login_manager.init_app(app)
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)  # メールアドレス
     password = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(15), nullable=False)  # 投稿者名の追加
+    role = db.Column(db.String(10), nullable=False)  # 役割の追加（admin か poster）
 
 # ユーザーローダーの設定
 @login_manager.user_loader
